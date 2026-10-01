@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE rrd SYSTEM "https://oss.oetiker.ch/rrdtool/rrdtool.dtd">
+<!-- Round Robin Database Dump -->
+<rrd>
+	<version>0003</version>
+	<step>300</step> <!-- Seconds -->
+	<lastupdate>1790671599</lastupdate> <!-- 2026-09-29 10:46:39 CEST -->
+
+	<ds>
+		<name> ds0 </name>
+		<type> COUNTER </type>
+		<minimal_heartbeat>600</minimal_heartbeat>
+		<min>0.0000000000e+00</min>
+		<max>1.2097500000e+12</max>
+
+		<!-- PDP Status -->
+		<last_ds>1752213961987793475</last_ds>
+		<value>7.1769076297e+12</value>
+		<unknown_sec> 0 </unknown_sec>
+	</ds>
+
+	<ds>
+		<name> ds1 </name>
+		<type> COUNTER </type>
+		<minimal_heartbeat>600</minimal_heartbeat>
+		<min>0.0000000000e+00</min>
+		<max>1.2097500000e+12</max>
+
+		<!-- PDP Status -->
+		<last_ds>2306090506151851474</last_ds>
+		<value>7.1897134348e+12</value>
+		<unknown_sec> 0 </unknown_sec>
+	</ds>
+
+	<!-- Round Robin Archives -->
+	<rra>
+		<cf>AVERAGE</cf>
+		<pdp_per_row>1</pdp_per_row> <!-- 300 seconds -->
+
+		<params>
+		<xff>5.0000000000e-01</xff>
+		</params>
+		<cdp_prep>
+			<ds>
+			<primary_value>7.2874607264e+10</primary_value>
+			<secondary_value>NaN</secondary_value>
+			<value>NaN</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+			<ds>
+			<primary_value>7.2958472029e+10</primary_value>
+			<secondary_value>NaN</secondary_value>
+			<value>NaN</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+		</cdp_prep>
+		<database>
+			<!-- 2026-09-29 10:45:00 CEST / 1790671500 --> <row><v>7.2874607264e+10</v><v>7.2958472029e+10</v></row>
+		</database>
+	</rra>
+	<rra>
+		<cf>AVERAGE</cf>
+		<pdp_per_row>6</pdp_per_row> <!-- 1800 seconds -->
+
+		<params>
+		<xff>5.0000000000e-01</xff>
+		</params>
+		<cdp_prep>
+			<ds>
+			<primary_value>7.1037628297e+10</primary_value>
+			<secondary_value>7.3142003457e+10</secondary_value>
+			<value>2.1813568151e+11</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+			<ds>
+			<primary_value>7.1063276832e+10</primary_value>
+			<secondary_value>7.3130434555e+10</secondary_value>
+			<value>2.1814269615e+11</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+		</cdp_prep>
+		<database>
+			<!-- 2026-09-29 10:00:00 CEST / 1790668800 --> <row><v>6.8443278744e+10</v><v>6.8459124522e+10</v></row>
+		</database>
+	</rra>
+	<rra>
+		<cf>AVERAGE</cf>
+		<pdp_per_row>24</pdp_per_row> <!-- 7200 seconds -->
+
+		<params>
+		<xff>5.0000000000e-01</xff>
+		</params>
+		<cdp_prep>
+			<ds>
+			<primary_value>6.3915812135e+10</primary_value>
+			<secondary_value>6.7970785521e+10</secondary_value>
+			<value>6.4436145129e+11</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+			<ds>
+			<primary_value>6.3919376918e+10</primary_value>
+			<secondary_value>6.7927681559e+10</secondary_value>
+			<value>6.4452235714e+11</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+		</cdp_prep>
+		<database>
+			<!-- 2026-09-29 10:00:00 CEST / 1790668800 --> <row><v>6.3915812135e+10</v><v>6.3919376918e+10</v></row>
+		</database>
+	</rra>
+	<rra>
+		<cf>AVERAGE</cf>
+		<pdp_per_row>288</pdp_per_row> <!-- 86400 seconds -->
+
+		<params>
+		<xff>5.0000000000e-01</xff>
+		</params>
+		<cdp_prep>
+			<ds>
+			<primary_value>8.0978420550e+10</primary_value>
+			<secondary_value>4.2655474568e+10</secondary_value>
+			<value>4.5247760765e+12</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+			<ds>
+			<primary_value>8.0990267882e+10</primary_value>
+			<secondary_value>4.2620667010e+10</secondary_value>
+			<value>4.5252291994e+12</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+		</cdp_prep>
+		<database>
+			<!-- 2026-09-29 02:00:00 CEST / 1790640000 --> <row><v>8.0978420550e+10</v><v>8.0990267882e+10</v></row>
+		</database>
+	</rra>
+	<rra>
+		<cf>MAX</cf>
+		<pdp_per_row>1</pdp_per_row> <!-- 300 seconds -->
+
+		<params>
+		<xff>5.0000000000e-01</xff>
+		</params>
+		<cdp_prep>
+			<ds>
+			<primary_value>7.2874607264e+10</primary_value>
+			<secondary_value>NaN</secondary_value>
+			<value>NaN</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+			<ds>
+			<primary_value>7.2958472029e+10</primary_value>
+			<secondary_value>NaN</secondary_value>
+			<value>NaN</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+		</cdp_prep>
+		<database>
+			<!-- 2026-09-29 10:45:00 CEST / 1790671500 --> <row><v>7.2874607264e+10</v><v>7.2958472029e+10</v></row>
+		</database>
+	</rra>
+	<rra>
+		<cf>MAX</cf>
+		<pdp_per_row>6</pdp_per_row> <!-- 1800 seconds -->
+
+		<params>
+		<xff>5.0000000000e-01</xff>
+		</params>
+		<cdp_prep>
+			<ds>
+			<primary_value>7.3142003457e+10</primary_value>
+			<secondary_value>7.3142003457e+10</secondary_value>
+			<value>7.2943121375e+10</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+			<ds>
+			<primary_value>7.3130434555e+10</primary_value>
+			<secondary_value>7.3130434555e+10</secondary_value>
+			<value>7.2958472029e+10</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+		</cdp_prep>
+		<database>
+			<!-- 2026-09-29 10:30:00 CEST / 1790670600 --> <row><v>7.3142003457e+10</v><v>7.3130434555e+10</v></row>
+		</database>
+	</rra>
+	<rra>
+		<cf>MAX</cf>
+		<pdp_per_row>24</pdp_per_row> <!-- 7200 seconds -->
+
+		<params>
+		<xff>5.0000000000e-01</xff>
+		</params>
+		<cdp_prep>
+			<ds>
+			<primary_value>6.9169217708e+10</primary_value>
+			<secondary_value>6.7970785521e+10</secondary_value>
+			<value>7.3142003457e+10</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+			<ds>
+			<primary_value>6.9199847888e+10</primary_value>
+			<secondary_value>6.7927681559e+10</secondary_value>
+			<value>7.3130434555e+10</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+		</cdp_prep>
+		<database>
+			<!-- 2026-09-29 10:00:00 CEST / 1790668800 --> <row><v>6.9169217708e+10</v><v>6.9199847888e+10</v></row>
+		</database>
+	</rra>
+	<rra>
+		<cf>MAX</cf>
+		<pdp_per_row>288</pdp_per_row> <!-- 86400 seconds -->
+
+		<params>
+		<xff>5.0000000000e-01</xff>
+		</params>
+		<cdp_prep>
+			<ds>
+			<primary_value>1.5780035622e+11</primary_value>
+			<secondary_value>4.2655474568e+10</secondary_value>
+			<value>7.3142003457e+10</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+			<ds>
+			<primary_value>1.5771080660e+11</primary_value>
+			<secondary_value>4.2620667010e+10</secondary_value>
+			<value>7.3130434555e+10</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+		</cdp_prep>
+		<database>
+			<!-- 2026-09-29 02:00:00 CEST / 1790640000 --> <row><v>1.5780035622e+11</v><v>1.5771080660e+11</v></row>
+		</database>
+	</rra>
+</rrd>
