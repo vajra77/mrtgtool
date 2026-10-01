@@ -62,7 +62,7 @@ pub struct Database {
 #[derive(Debug, Deserialize, Clone)]
 pub struct Row {
     #[serde(rename = "v")]
-    pub values: RRDSample,
+    pub values: [RRDFloat; 2],
 }
 
 impl Default for RRA {

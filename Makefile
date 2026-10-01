@@ -8,7 +8,7 @@ CARGO    := cargo
 all:
 	@echo "===> Compiling Rust ..."
 	$(CARGO) build --release
-	@cp -f target/release/mrtgtool $@
+	@cp -f target/release/mrtgtool $(RS_BIN)
 	@echo "OK: $@"
 
 clean:

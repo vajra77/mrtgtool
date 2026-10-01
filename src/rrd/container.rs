@@ -1,3 +1,4 @@
+use crate::rrd::types::RRDUlong;
 use super::format::*;
 
 pub struct Container {
@@ -40,6 +41,46 @@ impl Container {
             ds1: dump.data_sources.get(1).cloned().unwrap_or_default(),
             rra: rra_list,
         }
+    }
+
+    pub fn find_max_in_rra(&self, rra_idx: u32) -> Option<RRDSample> {
+        if rra_idx >= self.rra.len() as u32 {
+            return None;
+        }
+
+        let rra = &self.rra[rra_idx as usize];
+
+        let mut iter = rra.database.rows.iter();
+        let mut max_sample = iter.next()?; // Restituisce None immediatamente se rows è vuoto
+        let mut idx = 0;
+        let mut max_idx = 0;
+        let nsamples = rra.database.rows.len() as u32;
+
+        for row in iter {
+            if row.values[0] > max_sample.values[0] || row.values[0] > max_sample.values[1] {
+                max_sample = row;
+                max_idx = nsamples - idx;
+            }
+            idx += 1;
+        }
+
+        let last_sample = match rra_idx {
+            0 | 4 => self.last_update - (self.last_update % 300) + 600,
+            1 | 5 => self.last_update - (self.last_update % 1800) + 3600,
+            2 | 6 => self.last_update - (self.last_update % 7200) + 14400,
+            3 | 7 => self.last_update - (self.last_update % 86400) + 172800,
+            _ => 0,
+        };
+
+        let timestamp = match rra_idx {
+            0 | 4 => last_sample - (300 * max_idx),
+            1 | 5 => last_sample - (1800 * max_idx),
+            2 | 6 => last_sample - (7200 * max_idx),
+            3 | 7 => last_sample - (86400 * max_idx),
+            _ => 0,
+        };
+        let result : RRDSample = (timestamp as RRDUlong, max_sample.values[0], max_sample.values[1]);
+        Some(result)
     }
 
     pub fn print_info(&self) {
