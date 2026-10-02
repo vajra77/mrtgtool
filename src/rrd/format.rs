@@ -76,3 +76,12 @@ impl Default for RRA {
         }
     }
 }
+
+#[derive(Debug, Clone)]
+pub struct Spike {
+    pub start_index: usize,
+    pub end_index: usize,
+    pub prev_sample: Option<RRDSample>,
+    pub next_sample: Option<RRDSample>,
+    pub samples: Vec<RRDSample>,
+}
