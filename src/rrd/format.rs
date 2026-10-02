@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Clone)]
-pub struct RRDDump {
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct RawDump {
     pub version: String,
     pub step: u32,
     pub lastupdate: u64,
@@ -12,7 +12,7 @@ pub struct RRDDump {
 }
 pub use super::types::{RRDFloat, RRDSample};
 
-#[derive(Debug, Deserialize, Clone, Default)]
+#[derive(Debug, Deserialize, Serialize, Clone, Default)]
 pub struct DataSource {
     pub name: String,
     #[serde(rename = "type")]
@@ -25,7 +25,7 @@ pub struct DataSource {
     pub unknown_sec: RRDFloat,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct RRA {
     pub cf: String,
     pub pdp_per_row: u32,
@@ -34,18 +34,18 @@ pub struct RRA {
     pub database: Database,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct RRAParams {
     pub xff: RRDFloat,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct CDPPrep {
     #[serde(rename = "ds")]
     pub ds: Vec<CDPDSStatus>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct CDPDSStatus {
     pub primary_value: RRDFloat,
     pub secondary_value: RRDFloat,
@@ -53,13 +53,13 @@ pub struct CDPDSStatus {
     pub unknown_datapoints: RRDFloat,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Database {
     #[serde(rename = "row")]
     pub rows: Vec<Row>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Row {
     #[serde(rename = "v")]
     pub values: [RRDFloat; 2],

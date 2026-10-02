@@ -1,6 +1,6 @@
 use super::format::*;
 
-pub struct Container {
+pub struct Dump {
     pub path: String,
     pub step: u32,
     pub last_update: u32,
@@ -9,12 +9,12 @@ pub struct Container {
     pub rra: [RRA; 8],
 }
 
-impl Container {
+impl Dump {
     pub fn new(path: &str) -> Self {
         // Genera ogni elemento richiamando una closure per gli indici da 0 a 7
         let rra_list: [RRA; 8] = std::array::from_fn(|_index| RRA::default());
 
-        Container {
+        Dump {
             path: path.to_string(),
             step: 0,
             last_update: 0,
@@ -24,9 +24,9 @@ impl Container {
         }
     }
 
-    pub fn parse_xml(path: &str) -> Self {
+    pub fn from_xml(path: &str) -> Self {
         let content = std::fs::read_to_string(path).expect("Failed to read XML file");
-        let dump: RRDDump = quick_xml::de::from_str(&content).expect("Failed to parse XML");
+        let dump: RawDump = quick_xml::de::from_str(&content).expect("Failed to parse XML");
 
         let mut rra_list: [RRA; 8] = std::array::from_fn(|_index| RRA::default());
         for (i, archive) in dump.archives.into_iter().enumerate() {
@@ -35,7 +35,7 @@ impl Container {
             }
         }
 
-        Container {
+        Dump {
             path: path.to_string(),
             step: dump.step,
             last_update: dump.lastupdate as u32,
@@ -43,6 +43,24 @@ impl Container {
             ds1: dump.data_sources.get(1).cloned().unwrap_or_default(),
             rra: rra_list,
         }
+    }
+    
+    pub fn to_xml(&self, path: &str) -> String {
+        let raw_dump = RawDump {
+            version: "0003".to_string(),
+            step: self.step,
+            lastupdate: self.last_update as u64,
+            data_sources: vec![self.ds0.clone(), self.ds1.clone()],
+            archives: self.rra.to_vec(),
+        };
+
+        let xml_content = quick_xml::se::to_string(&raw_dump).expect("Failed to serialize XML");
+
+        if !path.is_empty() {
+            std::fs::write(path, &xml_content).expect("Failed to write XML file");
+        }
+
+        xml_content
     }
 
     pub fn find_max(&self, rra_idx: u32) -> Option<RRDSample> {

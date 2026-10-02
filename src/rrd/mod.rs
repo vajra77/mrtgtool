@@ -1,5 +1,6 @@
-pub mod container;
+pub mod dump;
 pub mod format;
 pub mod types;
 
-pub use container::Container;
+pub use dump::Dump;
+pub use types::RRAType;

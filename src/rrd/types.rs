@@ -1,13 +1,33 @@
+use clap::ValueEnum;
+
 pub type RRDFloat = f64;
 pub type RRDUlong = u64;
 
 pub type RRDSample = (RRDUlong, RRDFloat, RRDFloat);
 
-pub const DAILY_AVG_IDX: u32 = 0;
-pub const WEEKLY_AVG_IDX: u32 = 1;
-pub const MONTHLY_AVG_IDX: u32 = 2;
-pub const YEARLY_AVG_IDX: u32 = 3;
-pub const DAILY_MAX_IDX: u32 = 4;
-pub const WEEKLY_MAX_IDX: u32 = 5;
-pub const MONTHLY_MAX_IDX: u32 = 6;
-pub const YEARLY_MAX_IDX: u32 = 7;
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum, Debug)]
+pub enum RRAType {
+    DailyAvg,
+    WeeklyAvg,
+    MonthlyAvg,
+    YearlyAvg,
+    DailyMax,
+    WeeklyMax,
+    MonthlyMax,
+    YearlyMax,
+}
+
+impl RRAType {
+    pub fn to_index(self) -> u32 {
+        match self {
+            RRAType::DailyAvg => 0,
+            RRAType::WeeklyAvg => 1,
+            RRAType::MonthlyAvg => 2,
+            RRAType::YearlyAvg => 3,
+            RRAType::DailyMax => 4,
+            RRAType::WeeklyMax => 5,
+            RRAType::MonthlyMax => 6,
+            RRAType::YearlyMax => 7,
+        }
+    }
+}
