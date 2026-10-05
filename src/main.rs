@@ -2,6 +2,7 @@ mod rrd;
 
 use clap::{Parser, Subcommand, ValueEnum};
 use rrd::types::RRAType;
+use crate::rrd::types::rra_idx_to_string;
 
 const K_SIGMA : f64 = 3.0;
 
@@ -31,11 +32,9 @@ enum Commands {
     },
 }
 
-
-
 fn main() {
     let cli = Cli::parse();
-    let dump = rrd::Dump::from_xml(&cli.input);
+    let mut dump = rrd::Dump::from_xml(&cli.input);
 
     match cli.command {
         Commands::FindMax { rra } => {
@@ -52,20 +51,36 @@ fn main() {
         Commands::DeSpike {
             output,
         } => {
-            let rra : RRAType = rrd::RRAType::DailyAvg;
-            let rra_idx = rra.to_index();
-            let spikes = dump.find_spikes_by_zscore(rra_idx, 0, K_SIGMA);
+            for rra_idx in 0 ..= 8u32 {
+                let spikes_in = dump.find_spikes_by_zscore(rra_idx, 0, K_SIGMA);
+                println!("Found {} input spikes in {:?}", spikes_in.len(), rra_idx_to_string(rra_idx));
+                for (i, spike) in spikes_in.iter().enumerate() {
+                    println!(
+                        "  Spike #{}: from row {} to row {} (samples: {})",
+                        i + 1,
+                        spike.start_index,
+                        spike.end_index,
+                        spike.samples.len()
+                    );
+                    println!("... patching ...");
+                    dump.patch_spike(rra_idx, spike, 0.05);
+                }
 
-            println!("Trovati {} spike su {:?}", spikes.len(), rra);
-            for (i, spike) in spikes.iter().enumerate() {
-                println!(
-                    "  Spike #{}: da riga {} a {} (campioni: {})",
-                    i + 1,
-                    spike.start_index,
-                    spike.end_index,
-                    spike.samples.len()
-                );
+                let spikes_out = dump.find_spikes_by_zscore(rra_idx, 1, K_SIGMA);
+                println!("Found {} input spikes out {:?}", spikes_out.len(), rra_idx_to_string(rra_idx));
+                for (i, spike) in spikes_out.iter().enumerate() {
+                    println!(
+                        "  Spike #{}: from row {} to row {} (samples: {})",
+                        i + 1,
+                        spike.start_index,
+                        spike.end_index,
+                        spike.samples.len()
+                    );
+                    println!("... patching ...");
+                    dump.patch_spike(rra_idx, spike, 0.05);
+                }
             }
+            println!("Dumping to XML file");
             dump.to_xml(&output);
         }
     }

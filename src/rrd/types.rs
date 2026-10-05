@@ -31,3 +31,17 @@ impl RRAType {
         }
     }
 }
+
+pub fn rra_idx_to_string(idx : u32) -> &'static str {
+    match idx {
+        0 => "daily_avg",
+        1 => "weekly_avg",
+        2 => "monthly_avg",
+        3 => "yearly_avg",
+        4 => "daily_max",
+        5 => "weekly_max",
+        6 => "monthly_max",
+        7 => "yearly_max",
+        _ => "unknown",
+    }
+}
