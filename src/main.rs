@@ -7,39 +7,52 @@ use crate::rrd::types::rra_idx_to_string;
 const K_SIGMA : f64 = 3.0;
 
 #[derive(Parser, Debug)]
-#[command(name = "mrtgtool", version, about = "Analysis and elaboration tool for MRTG-generated RRD files")]
-struct Cli {
+#[command(
+    name = "mrtgtool",
+    version,
+    about = "Analysis and elaboration tool for MRTG-generated RRD files"
+)]
 
+struct Cli {
     #[command(subcommand)]
     command: Commands,
+
+
 }
 
 #[derive(Subcommand, Debug)]
 enum Commands {
+    /// Find the maximum value for a given RRA
     FindMax {
-        #[arg(short, long, default_value = "dump.xml", global = true)]
+        /// Path of input XML file
+        #[arg(short, long, default_value = "in.xml")]
         input: String,
 
+        /// RRA to analyze
         #[arg(long, value_enum)]
         rra: RRAType,
     },
 
+    /// Remove spikes from an RRD file
     DeSpike {
-        #[arg(short, long, default_value = "dump.xml", global = true)]
+        /// Path of input XML file
+        #[arg(short, long, default_value = "in.xml")]
         input: String,
 
-        #[arg(short,long)]
+        /// Path of output XML file
+        #[arg(short, long, default_value = "out.xml")]
         output: String,
     },
 }
 
 fn main() {
     let cli = Cli::parse();
-
-
     match cli.command {
-        Commands::FindMax { input, rra } => {
-            let mut dump = rrd::Dump::from_xml(&input);
+        Commands::FindMax {
+            input,
+            rra
+        } => {
+            let dump = rrd::Dump::from_xml(&input);
             let rra_idx = rra.to_index();
             match dump.find_max(rra_idx) {
                 Some((ts, max_in, max_out)) => {
