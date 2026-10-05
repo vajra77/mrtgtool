@@ -10,20 +10,6 @@ pub struct Dump {
 }
 
 impl Dump {
-    pub fn new(path: &str) -> Self {
-        // Genera ogni elemento richiamando una closure per gli indici da 0 a 7
-        let rra_list: [RRA; 8] = std::array::from_fn(|_index| RRA::default());
-
-        Dump {
-            path: path.to_string(),
-            step: 0,
-            last_update: 0,
-            ds0: DataSource::default(),
-            ds1: DataSource::default(),
-            rra: rra_list,
-        }
-    }
-
     pub fn from_xml(path: &str) -> Self {
         let content = std::fs::read_to_string(path).expect("Failed to read XML file");
         let dump: RawDump = quick_xml::de::from_str(&content).expect("Failed to parse XML");

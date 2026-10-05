@@ -1,17 +1,14 @@
 mod rrd;
 
-use clap::{Parser, Subcommand, ValueEnum};
+use clap::{Parser, Subcommand};
 use rrd::types::RRAType;
 use crate::rrd::types::rra_idx_to_string;
 
 const K_SIGMA : f64 = 3.0;
 
 #[derive(Parser, Debug)]
-#[command(name = "mrtgtool", version, about = "Strumento di analisi ed elaborazione dump RRD MRTG")]
+#[command(name = "mrtgtool", version, about = "Analysis and elaboration tool for MRTG-generated RRD files")]
 struct Cli {
-    /// Percorso del file XML da analizzare
-    #[arg(short, long, default_value = "assets/dati.xml", global = true)]
-    input: String,
 
     #[command(subcommand)]
     command: Commands,
@@ -19,25 +16,30 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
-    /// Trova il valore massimo per una specifica RRA
     FindMax {
-        /// RRA da analizzare
+        #[arg(short, long, default_value = "dump.xml", global = true)]
+        input: String,
+
         #[arg(long, value_enum)]
         rra: RRAType,
     },
-    /// Rileva e gestisce gli spike di traffico
+
     DeSpike {
-        #[arg(long)]
+        #[arg(short, long, default_value = "dump.xml", global = true)]
+        input: String,
+
+        #[arg(short,long)]
         output: String,
     },
 }
 
 fn main() {
     let cli = Cli::parse();
-    let mut dump = rrd::Dump::from_xml(&cli.input);
+
 
     match cli.command {
-        Commands::FindMax { rra } => {
+        Commands::FindMax { input, rra } => {
+            let mut dump = rrd::Dump::from_xml(&input);
             let rra_idx = rra.to_index();
             match dump.find_max(rra_idx) {
                 Some((ts, max_in, max_out)) => {
@@ -49,8 +51,10 @@ fn main() {
             }
         }
         Commands::DeSpike {
+            input,
             output,
         } => {
+            let mut dump = rrd::Dump::from_xml(&input);
             for rra_idx in 0 ..= 8u32 {
                 let spikes_in = dump.find_spikes_by_zscore(rra_idx, 0, K_SIGMA);
                 println!("Found {} input spikes in {:?}", spikes_in.len(), rra_idx_to_string(rra_idx));
